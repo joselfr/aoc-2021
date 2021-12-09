@@ -2,7 +2,7 @@
 
 module Day09
   def self.input
-    File.read('input.txt').split.map { _1.chars.map(&:to_i) }
+    File.read(File.join(__dir__, 'input.txt')).split.map { _1.chars.map(&:to_i) }
   end
 
   def self.search_lowerpoint(map)
@@ -47,6 +47,3 @@ module Day09
     basin_sizes.sort.pop(3).reduce(:*)
   end
 end
-
-puts Day09.part1
-puts Day09.part2

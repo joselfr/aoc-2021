@@ -1,0 +1,51 @@
+#!/bin/zsh
+
+day=$(date +%d)
+all=0
+
+if [ $# -ge 1 ]; then
+    if [[ "$1" =~ ^[0-9]{2}$ ]]; then
+        day=$1
+    else
+        echo "Incorrect format for day"
+        exit 1
+    fi
+fi
+
+write_file() {
+    if [ -f $2 ] && [ $all -eq 0 ]; then
+        echo "File $2 already exists. Override? (y/n/a)"
+        read -k 1 -s answer
+        echo $answer
+        if [ "$answer" = "y" ]; then
+            echo "  -> Overriding file $2"
+        elif [ "$answer" = "a" ]; then
+            all=1
+        else
+            echo " -> Skipping file $2"
+            return
+        fi
+    fi
+    echo "$1" > $2
+}
+
+echo "Generating code file"
+mkdir -p day${day}
+rbpath=day${day}/day${day}.rb
+write_file "$(cat templates/day.rb | sed "s/{day}/$day/g")" $rbpath
+echo "  -> ${rbpath}"
+
+echo "Generating input file"
+inputpath=day${day}/input.txt
+write_file "" $inputpath
+echo "  -> ${inputpath}"
+
+echo "Generating rspec file"
+rspecpath=spec/day${day}_spec.rb
+write_file "$(cat templates/day_spec.rb | sed "s/{day}/$day/g")" $rspecpath
+echo "  -> ${rspecpath}"
+
+echo "Generating fixture file"
+fixturepath=spec/fixtures/day${day}_example.txt
+write_file "" $fixturepath
+echo "  -> ${fixturepath}"

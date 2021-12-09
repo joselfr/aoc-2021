@@ -2,7 +2,7 @@
 
 module Day05
   def self.input
-    File.read('input.txt').scan(/\d+/).map(&:to_i).each_slice(4).to_a
+    File.read(File.join(__dir__, 'input.txt')).scan(/\d+/).map(&:to_i).each_slice(4).to_a
   end
 
   def self.solve(&block)
@@ -43,6 +43,3 @@ module Day05
     solve
   end
 end
-
-puts Day05.part1
-puts Day05.part2

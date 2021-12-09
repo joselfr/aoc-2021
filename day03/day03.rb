@@ -1,6 +1,6 @@
 module Day03
     def self.input
-        @input ||= File.read(File.join(__dir__, "input.txt")).split("\n").map{_1.chars.map(&:to_i)}
+        File.read(File.join(__dir__, "input.txt")).split("\n").map{_1.chars.map(&:to_i)}
     end
 
     def self.part1
@@ -26,6 +26,3 @@ module Day03
         f[1,0,input.clone] * f[0,1,input.clone]
     end
 end
-
-puts Day03.part1
-puts Day03.part2

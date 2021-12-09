@@ -2,7 +2,7 @@
 
 module Day07
   def self.input
-    @input ||= File.read('input.txt').split(',').map(&:to_i)
+    File.read(File.join(__dir__, 'input.txt')).split(',').map(&:to_i)
   end
 
   def self.solve(&block)
@@ -22,6 +22,3 @@ module Day07
     end
   end
 end
-
-puts Day07.part1
-puts Day07.part2

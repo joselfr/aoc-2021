@@ -2,7 +2,7 @@
 
 module Day04
   def self.input
-    bingo = File.open('input.txt')
+    bingo = File.open(File.join(__dir__, 'input.txt'))
     draw = bingo.gets.split(',').map(&:to_i)
     boards = bingo.read.split.map(&:to_i).each_slice(5).each_slice(5).to_a
     [draw, boards]
@@ -47,6 +47,3 @@ module Day04
     last_bingo
   end
 end
-
-puts Day04.part1
-puts Day04.part2

@@ -45,6 +45,3 @@ module Day02
     hpos * depth
   end
 end
-
-puts Day02.part1
-puts Day02.part2

@@ -13,6 +13,3 @@ module Day01
     input.each_cons(3).each_cons(2).count { |a, b| a.sum < b.sum }
   end
 end
-
-puts Day01.part1
-puts Day01.part2

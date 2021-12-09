@@ -2,7 +2,8 @@
 
 module Day08
   def self.input
-    input = File.read('input.txt').split("\n").map { _1.split('|').map(&:split) }
+    file = File.open(File.join(__dir__, 'input.txt'))
+    file.read.split("\n").map { _1.split('|').map(&:split) }
   end
 
   def self.part1
@@ -110,6 +111,3 @@ module Day08
     outputs.sum
   end
 end
-
-puts Day08.part1
-puts Day08.part2

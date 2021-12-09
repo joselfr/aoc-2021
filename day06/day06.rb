@@ -2,7 +2,7 @@
 
 module Day06
   def self.input
-    File.read('input.txt').split(',').map(&:to_i)
+    File.read(File.join(__dir__, 'input.txt')).split(',').map(&:to_i)
   end
 
   def self.part1
@@ -38,6 +38,3 @@ module Day06
     f.sum { _2 }
   end
 end
-
-puts Day06.part1
-puts Day06.part2
