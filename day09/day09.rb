@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Day09
   def self.input
     File.read('input.txt').split.map { _1.chars.map(&:to_i) }
