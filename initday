@@ -49,3 +49,5 @@ echo "Generating fixture file"
 fixturepath=spec/fixtures/day${day}_example.txt
 write_file "" $fixturepath
 echo "  -> ${fixturepath}"
+
+code $rbpath $fixturepath $rspecpath $inputpath
