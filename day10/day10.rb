@@ -20,7 +20,7 @@ module Day10
     File.read(File.join(__dir__, 'input.txt')).split(?\n).map(&:chars)
   end
   
-  def self.is_valid?(row)
+  def self.get_invalid_char?(row)
     stack = []
     row.each do |c|
       if c.match(/[\(\[\{\<]/)
@@ -38,14 +38,14 @@ module Day10
   def self.part1
     illegal_chars = []
     input.each do |row|
-      illegal_char = is_valid?(row)
+      illegal_char = get_invalid_char?(row)
       illegal_chars << illegal_char if illegal_char
     end
     illegal_chars.sum{|c| MAPPING_VALUE_P1[c]}
   end
   
   def self.part2
-    incomplete = input.filter{ |row| is_valid?(row).nil? }
+    incomplete = input.filter{ |row| get_invalid_char?(row).nil? }
     scores = incomplete.map do |row|
       stack = []
       row.each do |c|
