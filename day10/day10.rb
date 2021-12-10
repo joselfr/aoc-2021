@@ -16,13 +16,6 @@ module Day10
     "<" => 4
   }
 
-  MAPPING_REVERSE = {
-    "(" => ")",
-    "[" => "]",
-    "{" => "}",
-    "<" => ">"
-  } 
-
   def self.input
     File.read(File.join(__dir__, 'input.txt')).split(?\n).map(&:chars)
   end
