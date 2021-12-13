@@ -44,7 +44,7 @@ module Day13
         if points.include?([x, y])
           print '#'
         else
-          print '.'
+          print ' '
         end
       end
     end
