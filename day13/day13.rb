@@ -37,18 +37,15 @@ module Day13
     #
     xmax = points.map{|p|p[0]}.max
     ymax = points.map{|p|p[1]}.max
+    ascii = Array.new(ymax+1) { Array.new(xmax+1, ' ') }
 
     for y in 0..ymax
-      puts
       for x in 0..xmax
         if points.include?([x, y])
-          print '#'
-        else
-          print ' '
+          ascii[y][x] = '#'
         end
       end
     end
-
-    points.uniq.size
+    ascii
   end
 end
