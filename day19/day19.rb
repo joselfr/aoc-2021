@@ -109,9 +109,7 @@ module Day19
       end
     end
 
-    pp scanners_positions
-
-    max_manhattan = scanners_positions.product(scanners_positions).map { |s1, s2| (s1 - s2).sum.abs }.max
+    max_manhattan = scanners_positions.product(scanners_positions).map { |s1, s2| (s1 - s2).map(&:abs).sum }.max
     nb_beacons = replaced_scanners.flatten.uniq.size
     return nb_beacons, max_manhattan
   end
