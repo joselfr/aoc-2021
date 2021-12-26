@@ -25,56 +25,40 @@ module Day21
     scores.min * (dice_side - 1)
   end
 
-  def self.gen_memo_key(positions, universes, scores=[0, 0], turn=0, dice_side=1)
-    "#{dice_side}-#{turn}-#{positions * ?-}-#{scores * ?-}"
+  def self.gen_memo_key(positions, scores=[0, 0], turn=0)
+    "#{turn}-#{positions * ?-}-#{scores * ?-}"
   end
 
-  def self.propagate_universes(positions, universes={}, scores=[0, 0], turn=0, dice_side=1, wins=[0, 0])
-    memo_key = gen_memo_key(positions, universes, scores, turn, dice_side)
-    pp wins
-    return universes[memo_key] if universes[memo_key]
-    #
-    # Play current universe
-    #
-    dice_throws = []
-    while scores.max < 24
-      dice_throws << [positions.clone, scores.clone, dice_side, turn]
-
-      player_idx = turn
-
-      positions[player_idx] += dice_side
-      positions[player_idx] -= 10 while positions[player_idx] > 10
-      scores[player_idx] += positions[player_idx]
-
-      dice_side += 1
-      dice_side = 1 if dice_side > 3
-      turn += 1
-      turn = 0 if turn > 1
+  def self.play_universe(positions, scores=[0,0], turn=0, memo={})
+    memo_key = gen_memo_key(positions, scores, turn)
+    if memo[memo_key]
+      return memo[memo_key]
     end
-    wins[scores.index(scores.max)] += 1
-    universes[memo_key] = wins.clone
-
-    #
-    # Play other universes
-    #
-    dice_throws.each do |positions, scores, dice_side, turn|
-      (1..2).each do |dice_delta|
-        new_dice_side = dice_side + dice_delta
-        new_dice_side -= 3 if new_dice_side > 3
-        propagate_universes(positions.clone, universes, scores.clone, turn, new_dice_side, universes[memo_key]) if scores.max < 24
-      end
+    wins = [0, 0]
+    if scores.max >= 21
+      wins[scores.index(scores.max)] = 1
+      return wins
     end
 
-    return universes[memo_key]
+    possible_dice_rolls = [1,2,3].product([1,2,3], [1,2,3])
+    possible_dice_rolls.each do |dice_rolls|
+      new_scores = scores.clone
+      new_positions = positions.clone
+
+      new_positions[turn] += dice_rolls.sum
+      new_positions[turn] -= 10 while new_positions[turn] > 10
+      new_scores[turn] += new_positions[turn]
+      pwins = play_universe(new_positions, new_scores, (turn + 1) % 2, memo)
+      wins[0] += pwins[0]
+      wins[1] += pwins[1]
+    end
+
+    memo[memo_key] = wins.clone
+    return wins
   end
 
   def self.part2
     positions = input
-    pp positions
-    universes = {}
-    pp propagate_universes(positions, universes)
-    pp universes.values.reduce { |a, b| a[0] += b[0]; a[1] += b[1]; a }
+    play_universe(positions).max
   end
 end
-
-# Day21.part2
